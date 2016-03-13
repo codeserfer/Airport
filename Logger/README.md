@@ -28,8 +28,11 @@ information, error.
 ### Серверная часть
 
 Написана на Python.
+
 Предоставляет REST API по адресу */api/list* по порту 8052.
+
 Возвращает список всех логов в JSON формате в виде:
+
 [{"status": "information", "date": "2016-03-13 14:27", "component": "baggage tractor", "id": 28, "text": "Hey!"}, {"status": "information", "date": "2016-03-13 14:27", "component": "baggage tractor", "id": 29, "text": "Hey!"}]
 
 Может принимать в качестве аргумента *status* и *component*.
