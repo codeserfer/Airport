@@ -1,0 +1,31 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="ng-table/dist/ng-table.min.css">
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+<script src="https://cdn.rawgit.com/esvit/ng-table/v0.8.3/dist/ng-table.min.js"></script>
+
+<title>Logs viewer</title>
+</head>
+<body>
+<div ng-app="myApp">
+  <div ng-controller="demoController as demo">
+    <table ng-table="tableParams" show-filter="true" class="table table-bordered table-striped">
+      <tr ng-repeat="row in $data track by row.id">
+        <td title="'id'" filter="{id: 'number'}" sortable="'id'">{{row.id}}</td>
+        <td title="'date'" filter="{date: 'number'}" sortable="'date'">{{row.date}}</td>
+        <td title="'component'" filter="{component: 'text'}" sortable="'component'">{{row.component}}</td>
+        <td title="'status'" filter="{status: 'text'}" sortable="'status'">{{row.status}}</td>
+        <td title="'text'" filter="{text: 'text'}" sortable="'text'">{{row.text}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
