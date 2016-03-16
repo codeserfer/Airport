@@ -11,7 +11,7 @@
 
 ### Формат тело сообщения:
 Тело сообщения должно быть сериализовано в JSON следующего вида:
-{'component': <component>, 'status': <status>, 'text': <text>}
+{'component': `<component>`, 'status': `<status>`, 'text': `<text>`}
 
 Возможные компоненты:
 time, information_panel, passenger, visualization, tower_control, logger, ground_control, handling_supervisor, plane, board, refueler, follow_me_van, catering_truck, passenger_bus, baggage_tractor, passenger_stairs, container_loader, vip_shuttle.
@@ -44,3 +44,7 @@ information, error.
 Представляет собой веб-интерфейс для удобного просмотра логов. Поддерживает автоматическую пагинацию.
 
 Раз в 5 секунд запрашивает у сервера логи и обновляет таблицу.
+
+## RabbitMQ Pusher
+
+Пример кода на c# для отправки сообщений в очередь rabbitMQ
