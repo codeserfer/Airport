@@ -1,0 +1,11 @@
+{
+  "db":
+  {
+    "user": "root",
+    "pass": "root",
+    "database": "Airport",
+    "port": "3306",
+    "host": "localhost"
+  }
+
+}

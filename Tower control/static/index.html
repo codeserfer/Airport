@@ -1,0 +1,108 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="ng-table/dist/ng-table.min.css">
+<link rel="stylesheet" href="sweetalert/sweetalert.css">
+
+<style>
+    .tooltip
+    {
+   			display: inline;
+    		position: relative;
+		}
+
+		.tooltip:hover:after
+    {
+    		background: #333;
+    		background: rgba(0,0,0,.8);
+    		border-radius: 5px;
+    		bottom: 26px;
+    		color: #fff;
+    		content: attr(title);
+    		left: 20%;
+    		padding: 5px 15px;
+    		position: absolute;
+    		z-index: 98;
+    		width: 220px;
+		}
+
+		.tooltip:hover:before
+    {
+    		border: solid;
+    		border-color: #333 transparent;
+    		border-width: 6px 6px 0 6px;
+    		bottom: 20px;
+    		content: "";
+    		left: 50%;
+    		position: absolute;
+    		z-index: 99;
+		}
+</style>
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+<script src="https://cdn.rawgit.com/esvit/ng-table/v0.8.3/dist/ng-table.min.js"></script>
+<script src="sweetalert/sweetalert.min.js"></script>
+
+<title>Towel control routes viewer</title>
+</head>
+<body>
+
+
+<div ng-app="myApp">
+  <div ng-controller="demoController as demo">
+
+    <table class="table table-bordered table-striped" style="width: 30%; float: left; margin-right: 40px;">
+      <caption style="text-align: center;">Runways</caption>
+      <tr ng-repeat="runway in runways">
+
+        <td align="center" title="'Runway id'">{{runway.id}}</td>
+
+        <td align="center" title="'Map id'" >{{runway.map_id}}</td>
+
+        <td align="center" ng-if="runway.plane_id!=null" title="'Plane id'">
+          <div class="glyphicon glyphicon-plane"></div> {{runway.plane_id}}
+        </td>
+
+        <td align="center" ng-if="runway.plane_id==null" title="'Plane id'"></td>
+
+        <td align="center" title="'Actions'">
+          <div class="glyphicon glyphicon-ok" style="margin-left: 5px; cursor: pointer; color: green;" ng-click="holdRunway(runway.id)"> </div>
+          <div class="glyphicon glyphicon-remove" style="margin-left: 5px; cursor: pointer;" ng-click="realizeRunway(runway.id)"> </div>
+          <div class="glyphicon glyphicon-trash" style="color: red; cursor: pointer;" ng-click="deleteRunway(runway.id)"></div>
+        </td>
+
+      </tr>
+    </table>
+
+
+    <table class="table table-bordered table-striped" style="width: 30%;">
+      <caption style="text-align: center;">Parkings</caption>
+      <tr ng-repeat="parking in parkings">
+
+        <td align="center" title="'parking id'">{{parking.id}}</td>
+
+        <td align="center" title="'Map id'" >{{parking.map_id}}</td>
+
+        <td align="center" ng-if="parking.plane_id!=null" title="'Plane id'">
+          <div class="glyphicon glyphicon-plane"></div> {{parking.plane_id}}
+        </td>
+
+        <td align="center" ng-if="parking.plane_id==null" title="'Plane id'"></td>
+
+        <td align="center" title="'Actions'">
+          <div class="glyphicon glyphicon-ok" style="margin-left: 5px; cursor: pointer; color: green;" ng-click="holdParking(parking.id)"> </div>
+          <div class="glyphicon glyphicon-remove" style="margin-left: 5px; cursor: pointer;" ng-click="realizeParking(parking.id)"> </div>
+          <div class="glyphicon glyphicon-trash" style="color: red; cursor: pointer;" ng-click="deleteParking(parking.id)"></div>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
