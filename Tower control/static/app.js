@@ -7,7 +7,7 @@ var app = angular.module('myApp', ['ngTable']);
   function demoController(NgTableParams, $http, $scope)
   {
 
-    $http.get("http://127.0.0.1:9999/api/listRunways")
+    $http.get("/api/listRunways")
   		.success(function(data, status, headers, config)
   		{
   	       		console.log ("data:", data);
@@ -40,7 +40,7 @@ var app = angular.module('myApp', ['ngTable']);
         },
         function()
         {
-          $http.get("http://127.0.0.1:9999/api/deleteRunway/" + id)
+          $http.get("/api/deleteRunway/" + id)
             .success(function(data, status, headers, config)
             {
                     $scope.runways = $scope.runways.filter(function (row)
@@ -91,7 +91,7 @@ var app = angular.module('myApp', ['ngTable']);
               }
 
               // do work
-              $http.get("http://127.0.0.1:9999/api/holdRunway/" + runwayID + "/" + planeID);
+              $http.get("/api/holdRunway/" + runwayID + "/" + planeID);
 
               for(var i in $scope.runways)
               {
@@ -123,7 +123,7 @@ var app = angular.module('myApp', ['ngTable']);
         function()
         {
 
-          $http.get("http://127.0.0.1:9999/api/realizeRunway/" + runwayID)
+          $http.get("/api/realizeRunway/" + runwayID)
             .success(function(data, status, headers, config)
             {
                     for(var i in $scope.runways)
@@ -149,7 +149,7 @@ var app = angular.module('myApp', ['ngTable']);
 
     // parkings
 
-    $http.get("http://127.0.0.1:9999/api/listParkings")
+    $http.get("/api/listParkings")
   		.success(function(data, status, headers, config)
   		{
   	       		console.log ("data:", data);
@@ -182,7 +182,7 @@ var app = angular.module('myApp', ['ngTable']);
         },
         function()
         {
-          $http.get("http://127.0.0.1:9999/api/deleteParking/" + id)
+          $http.get("/api/deleteParking/" + id)
             .success(function(data, status, headers, config)
             {
                     $scope.parkings = $scope.parkings.filter(function (row)
@@ -233,7 +233,7 @@ var app = angular.module('myApp', ['ngTable']);
               }
 
               // do work
-              $http.get("http://127.0.0.1:9999/api/holdParking/" + parkingID + "/" + planeID);
+              $http.get("/api/holdParking/" + parkingID + "/" + planeID);
 
               for(var i in $scope.parkings)
               {
@@ -265,7 +265,7 @@ var app = angular.module('myApp', ['ngTable']);
         function()
         {
 
-          $http.get("http://127.0.0.1:9999/api/realizeParking/" + parkingID)
+          $http.get("/api/realizeParking/" + parkingID)
             .success(function(data, status, headers, config)
             {
                     for(var i in $scope.parkings)

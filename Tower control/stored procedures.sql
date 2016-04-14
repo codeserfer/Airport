@@ -13,7 +13,7 @@ BEGIN
 
 	if free_id is not null then
 	    update runways set plane_id = car_id where id = free_id;
-	    select "OK" as status, 0 as error, free_id as id;
+	    select "OK" as status, 0 as error, free_id as placeId;
 	else
 	    select "No free runways" as status, 1 as error, NULL as id;
 	end if;
@@ -40,7 +40,7 @@ BEGIN
 
 	if free_id is not null then
 	    update parkings set plane_id = car_id where id = free_id;
-	    select "OK" as status, 0 as error, free_id as id;
+	    select "OK" as status, 0 as error, free_id as placeId;
 	else
 	    select "No free parking" as status, 1 as error, NULL as id;
 	end if;
