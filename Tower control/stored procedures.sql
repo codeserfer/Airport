@@ -5,7 +5,7 @@ BEGIN
 	declare free_id int(11) default null;
 
 	START TRANSACTION;
-	select id into free_id
+	select map_id into free_id
 	from runways
 	where plane_id is NULL
 	limit 1
@@ -32,7 +32,7 @@ BEGIN
 	declare free_id int(11) default null;
 
 	START TRANSACTION;
-	select id into free_id
+	select map_id into free_id
 	from parkings
 	where plane_id is NULL
 	limit 1

@@ -7,19 +7,24 @@ var app = angular.module('myApp', ['ngTable']);
   function demoController(NgTableParams, $http, $scope)
   {
 
-    $http.get("/api/listRunways")
-  		.success(function(data, status, headers, config)
-  		{
-  	       		console.log ("data:", data);
+    $scope.refreshRunways = function()
+    {
+      $http.get("/api/listRunways")
+    		.success(function(data, status, headers, config)
+    		{
+    	       		console.log ("data:", data);
 
-              $scope.runways = data;
+                $scope.runways = data;
 
-  			      reloadTableRunways($scope.runways);
-  		})
-  		.error(function(data, status, headers, config)
-  		{
-  			console.log ("error:", data);
-  		});
+    			      reloadTableRunways($scope.runways);
+    		})
+    		.error(function(data, status, headers, config)
+    		{
+    			console.log ("error:", data);
+    		});
+    }
+
+    $scope.refreshRunways ();
 
     var reloadTableRunways = function (data)
     {
@@ -149,19 +154,30 @@ var app = angular.module('myApp', ['ngTable']);
 
     // parkings
 
-    $http.get("/api/listParkings")
-  		.success(function(data, status, headers, config)
-  		{
-  	       		console.log ("data:", data);
+      $scope.refreshParkings = function()
+      {
+        $http.get("/api/listParkings")
+      		.success(function(data, status, headers, config)
+      		{
+      	       		console.log ("data:", data);
 
-              $scope.parkings = data;
+                  $scope.parkings = data;
 
-  			      reloadTableParkings($scope.parkings);
-  		})
-  		.error(function(data, status, headers, config)
-  		{
-  			console.log ("error:", data);
-  		});
+      			      reloadTableParkings($scope.parkings);
+      		})
+      		.error(function(data, status, headers, config)
+      		{
+      			console.log ("error:", data);
+      		});
+      }
+
+    $scope.refreshParkings();
+
+    $scope.refreshInfo = function ()
+    {
+      $scope.refreshParkings();
+      $scope.refreshRunways();
+    }
 
     var reloadTableParkings = function (data)
     {
@@ -250,6 +266,7 @@ var app = angular.module('myApp', ['ngTable']);
               swal("Nice!", null, "success");
           });
     }
+
 
     $scope.realizeParking = function (parkingID)
     {

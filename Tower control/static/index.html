@@ -79,7 +79,7 @@
     </table>
 
 
-    <table class="table table-bordered table-striped" style="width: 30%;">
+    <table class="table table-bordered table-striped" style="width: 30%; float: left; margin-right: 40px;">
       <caption style="text-align: center;">Parkings</caption>
       <tr ng-repeat="parking in parkings">
 
@@ -98,9 +98,10 @@
           <div class="glyphicon glyphicon-remove" style="margin-left: 5px; cursor: pointer;" ng-click="realizeParking(parking.id)"> </div>
           <div class="glyphicon glyphicon-trash" style="color: red; cursor: pointer;" ng-click="deleteParking(parking.id)"></div>
         </td>
-
       </tr>
     </table>
+
+    <button type="button" class="btn btn-success" ng-click="refreshInfo()" style="margin-top: 40px;">Refresh info</button>
   </div>
 </div>
 <script src="app.js"></script>

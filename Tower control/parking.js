@@ -1,4 +1,5 @@
 var connection = require('./mysqlConnection');
+var logger     = require('./logger');
 
 var listParkings = (req, res) =>
 {
@@ -50,10 +51,12 @@ var realizeParking = (req, res) =>
   {
     if (!err)
     {
+      logger.logInformation(`realizing parking for parking_id ${req.params.parking_id} is success`);
       res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
     }
     else
     {
+      logger.logError(`realizing parking for parking_id ${req.params.parking_id}: error!`);
       console.log('realizeParkings: Error in query');
       res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
     }
@@ -93,10 +96,22 @@ var holdFreeParking =  (req, res) =>
   {
     if (!err)
     {
-      res.end(JSON.stringify(rows[0][0]));
+      var result = rows[0][0];
+
+      if (result['error'] == 0)
+      {
+          logger.logInformation(`Hold free parking for planeID ${req.params.plane_id}: ${result['placeId']}`);
+      }
+      else
+      {
+        logger.logInformation(`Hold free parking for planeID ${req.params.plane_id}: no free parking`);
+      }
+
+      res.end(JSON.stringify(result));
     }
     else
     {
+      logger.lorError (`Cant hold parking for planeID ${req.params.plane_id}`)
       console.log('hold_free_parking: Error in query');
       res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
     }

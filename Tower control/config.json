@@ -6,6 +6,20 @@
     "database": "Airport",
     "port": "3306",
     "host": "localhost"
+  },
+  "rabbitmq":
+  {
+    "server": "185.81.113.164",
+    "queue": "logger_queue"
+  },
+  "logger":
+  {
+    "component": "tower_control"
+  },
+  "CarTowerService":
+  {
+    "ip": "192.168.0.1",
+    "port": 1488
   }
 
 }

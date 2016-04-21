@@ -12,8 +12,8 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/api/list')
-def list_of_logs ():
+@app.route('/api/list/<int:rows_count>')
+def list_of_logs (rows_count):
     try:
 	# getting args
 	start_date = request.args.get('start_date', None)
@@ -44,7 +44,7 @@ def list_of_logs ():
             string_filters += " and ".join(filters)
 	
 
-	query = "select id, status, date, component, text from logs" + string_filters
+	query = "select id, status, date, component, text from logs" + string_filters + "order by id limit %s" % rows_count
 
 	print ("query: %s" % query)
 
