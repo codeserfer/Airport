@@ -63,6 +63,30 @@ var realizeParking = (req, res) =>
   });
 }
 
+var realizeParkingMap = (req, res) =>
+{
+  if (!req.params.map_id)
+  {
+    res.end(JSON.stringify({'Error': 1, 'Status': "No map id"}));
+    return;
+  }
+
+  connection.connection.query(`update parkings set plane_id = NULL where map_id = ${req.params.map_id}`, function(err, rows, fields)
+  {
+    if (!err)
+    {
+      logger.logInformation(`realizing parking for map_id ${req.params.map_id} is success`);
+      res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
+    }
+    else
+    {
+      logger.logError(`realizing parking for map_id ${req.params.map_id}: error!`);
+      console.log('realizeParkings: Error in query');
+      res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
+    }
+  });
+}
+
 var deleteParking =  (req, res) =>
 {
   if (!req.params.id)
@@ -125,5 +149,6 @@ module.exports =
   'holdParking'     : holdParking,
   'realizeParking'  : realizeParking,
   'deleteParking'   : deleteParking,
-  'holdFreeParking' : holdFreeParking
+  'holdFreeParking' : holdFreeParking,
+  'realizeParkingMap': realizeParkingMap
 };

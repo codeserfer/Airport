@@ -67,6 +67,36 @@ var realizeRunway = (req, res) =>
   });
 }
 
+var realizeRunwayMap = (req, res) =>
+{
+
+  console.log("realizeRunwayMap! req.params.map_id", req.params.map_id);
+
+  if (!req.params.map_id)
+  {
+    logger.logError(`holdRunway: No map_id`);
+    res.end(JSON.stringify({'Error': 1, 'Status': "No map_id"}));
+    return;
+  }
+
+  connection.connection.query(`update runways set plane_id = NULL where map_id = ${req.params.map_id}`, function(err, rows, fields)
+  {
+    if (!err)
+    {
+      logger.logInformation(`map_id ${req.params.map_id} successfuly realized`);
+      console.log(`map_id ${req.params.map_id} successfuly realized`);
+      res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
+    }
+    else
+    {
+      console.log('realizeRunway: Error in query');
+      console.log(`update runways set plane_id = NULL where map_id = ${req.params.map_id}`);
+      logger.logError(`holdRunway: cant realize map_id ${req.params.map_id}`);
+      res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
+    }
+  });
+}
+
 var deleteRunway = (req, res) =>
 {
   if (!req.params.id)
@@ -166,4 +196,5 @@ module.exports =
   'deleteRunway'   : deleteRunway,
   'holdFreeRunway' : holdFreeRunway,
   'getPlanesRunway': getPlanesRunway,
+  'realizeRunwayMap': realizeRunwayMap
 };

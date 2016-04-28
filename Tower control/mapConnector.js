@@ -1,29 +1,30 @@
 var HTTPRequest = require('./HTTPRequest');
 var connection  = require('./mysqlConnection');
 var logger      = require('./logger');
+var config      = require('./config');
 
 var getRunways = (req, res) =>
 {
   /*
   *
-  * 1. Truncate runways;
-  * 2. Get routes from map;
+  * 1. Get routes from map;
+  * 2. Truncate runways;
   * 3. Push runways to db.
   *
   */
 
-  // 1. Truncate runways.
-  connection.connection.query("truncate table runways", function(err, rows, fields)
+  // 1. Get routes from map.
+  HTTPRequest.makeHTTPPostRequest(`http://${config.get('mapConnector:ip')}:${config.get('mapConnector:port')}/MapService/GetPlacesOfType`, function(response)
   {
-    if (!err)
+    if (response)
     {
-      console.log("ranways has been truncated");
-
-      // 2. Get routes from map.
-      HTTPRequest.makeHTTPPostRequest("http://10.254.7.63:3229/MapService/GetPlacesOfType", function(response)
+      // 2. Truncate runways.
+      connection.connection.query("truncate table runways", function(err, rows, fields)
       {
-        if (response)
+        if (!err)
         {
+          console.log("ranways has been truncated");
+
           var runways = [];
           for (var i in response)
           {
@@ -47,46 +48,49 @@ var getRunways = (req, res) =>
               if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant insert into db"}));
             }
           });
+
         }
         else
         {
-          console.log("Cant get runways from map!");
-          logger.logError("Cant get runways from map!");
-          if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant get runways from map!"}));
+          console.log('Cant truncate table runways');
+          logger.logError('Cant truncate table runways');
+          if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant truncate table runways"}));
         }
-      }, 3);
+      });
     }
     else
     {
-      console.log('Cant truncate table runways');
-      logger.logError('Cant truncate table runways');
-      if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant truncate table runways"}));
+      console.log("Cant get runways from map! Work with old runways!");
+      logger.logError("Cant get runways from map! Work with old runways!");
+      if (res) res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
     }
-  });
+  }, 3);
+
+
 }
 
 var getParkings = (req, res) =>
 {
   /*
   *
-  * 1. Truncate parkings;
-  * 2. Get parkings from map;
+  * 1. Get parkings from map;
+  * 2. Truncate parkings;
   * 3. Push parkings to db.
   *
   */
 
-  // 1. Truncate parkings.
-  connection.connection.query("truncate table parkings", function(err, rows, fields)
+  // 1. Get routes from map.
+  HTTPRequest.makeHTTPPostRequest(`http://${config.get('mapConnector:ip')}:${config.get('mapConnector:port')}/MapService/GetPlacesOfType`, function(response)
   {
-    if (!err)
+    if (response)
     {
-      console.log("parkings has been truncated");
-
-      // 2. Get routes from map.
-      HTTPRequest.makeHTTPPostRequest("http://10.254.7.63:3229/MapService/GetPlacesOfType", function(response)
+      // 2. Truncate parkings.
+      connection.connection.query("truncate table parkings", function(err, rows, fields)
       {
-        if (response)
+        if (!err)
         {
+          console.log("parkings has been truncated");
+
           var parkings = [];
           for (var i in response)
           {
@@ -113,19 +117,19 @@ var getParkings = (req, res) =>
         }
         else
         {
-          console.log("Cant get parkings from map!");
-          logger.logError("Cant get parkings from map!");
-          if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant get parkings from map!"}));
+          console.log('Cant truncate table parkings! Work with old parkings');
+          logger.logError('Cant truncate table parkings! Work with old parkings');
+          if (res) res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
         }
-      }, 2);
+      });
     }
     else
     {
-      console.log('Cant truncate table parkings');
-      logger.logError('Cant truncate table parkings');
-      if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant truncate table parkings"}));
+      console.log("Cant get parkings from map! Work with old parkings!");
+      logger.logError("Cant get parkings from map! Work with old parkings!");
+      if (res) res.end(JSON.stringify({'Error': 1, 'Status': "Cant get parkings from map!"}));
     }
-  });
+  }, 2);
 }
 
 module.exports =

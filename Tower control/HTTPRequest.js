@@ -1,4 +1,5 @@
 var request = require("request");
+var config  = require('./config');
 
 var makeHTTPGetRequest = (urlToCall, callback) =>
 {
@@ -24,7 +25,8 @@ var makeHTTPPostRequest = (urlToCall, callback, postParams) =>
     {
       headers: {'content-type' : 'application/json'},
       url:     urlToCall,
-      body:    JSON.stringify(postParams)
+      body:    JSON.stringify(postParams),
+      timeout: config.get('HTTPRequest:timeout'),
     },
     function (err, data, response) {
       if (err)

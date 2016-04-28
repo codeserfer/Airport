@@ -20,6 +20,15 @@
   {
     "ip": "192.168.0.1",
     "port": 1488
+  },
+  "mapConnector":
+  {
+    "ip": "10.128.0.30",
+    "port": 3228
+  },
+  "HTTPRequest":
+  {
+    "timeout": 5000
   }
 
 }
