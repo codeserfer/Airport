@@ -15,13 +15,18 @@
 <body>
 <div ng-app="myApp">
   <div ng-controller="demoController as demo">
-    <input type="text" class="form-control" ng-model="rowsCount" style="margin-bottom: 10px;">
+
+   <input type="checkbox" ng-model="autoUpdate" ng-change="changeAutoUpdate()">Auto update
+   <button type="button" class="btn btn-success" ng-click="update()">Update</button>
+   <button type="button" class="btn btn-warning" ng-click="truncate()">Clear log</button>
+   <button type="button" class="btn btn-danger" ng-click="truncateAll()">Clear full log</button>
 
     <table ng-table="tableParams" show-filter="true" class="table table-bordered table-striped">
       <tr ng-repeat="row in $data track by row.id">
         <td title="'id'" filter="{id: 'number'}" sortable="'id'">{{row.id}}</td>
         <td title="'date'" filter="{date: 'number'}" sortable="'date'">{{row.date}}</td>
         <td title="'component'" filter="{component: 'text'}" sortable="'component'">{{row.component}}</td>
+        <td title="'car_id'" filter="{car_id: 'number'}" sortable="'car_id'">{{row.car_id}}</td>
         <td title="'status'" filter="{status: 'text'}" sortable="'status'">{{row.status}}</td>
         <td title="'text'" filter="{text: 'text'}" sortable="'text'">{{row.text}}</td>
       </tr>

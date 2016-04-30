@@ -83,8 +83,13 @@ def listen_queue(ch, method, properties, body):
 	log ("My timestamp")
     else:
 	properties.timestamp=datetime.datetime.fromtimestamp(properties.timestamp).strftime('%Y-%m-%d %H:%M:%S')
-	
-    log ("timestamp is %s" % properties.timestamp)
+
+
+    if not hasattr(body, 'car_id'):
+	body.car_id = "NULL"	
+
+    #log ("timestamp is %s" % properties.timestamp)
+    log ("car_id is %s" % body.car_id)
     
     # push to db
 
@@ -105,7 +110,7 @@ def listen_queue(ch, method, properties, body):
 	log (query)	
         cursor.execute (query)
     else:
-    	query = 'insert into logs (date, component, status, text) values ("%s", "%s", "%s", "%s")' % (properties.timestamp, body.component, body.status, body.text)
+    	query = 'insert into logs (date, component, status, text, car_id) values ("%s", "%s", "%s", "%s", %s)' % (properties.timestamp, body.component, body.status, body.text, body.car_id)
     
 	log (query)
 	cursor.execute (query)

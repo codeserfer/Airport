@@ -12,8 +12,58 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/api/list/<int:rows_count>')
-def list_of_logs (rows_count):
+@app.route('/api/truncate')
+def truncate():
+    try:
+	query = "delete from logs where date < DATE_ADD(NOW(), INTERVAL -1 DAY)"
+
+	db = MySQLdb.connect(host = config.get('local','host')
+                             , user         = config.get('local','user')
+                             , passwd       = config.get('local','pass')
+                             , db           = config.get('local','db')
+                             , charset      = 'utf8'
+                             , use_unicode  = True)
+
+        cursor = db.cursor(cursorclass=MySQLdb.cursors.DictCursor)
+
+        cursor.execute (query)
+
+	cursor.close()
+        db.commit()
+
+        return json.dumps ({"Error": 0, "Status": "OK"})
+    except Exception, e:
+        print ('Error: %s' % e)
+        abort(500)
+
+
+@app.route('/api/truncate_all')
+def truncate_all():
+    try:
+        query = "delete from logs"
+
+        db = MySQLdb.connect(host = config.get('local','host')
+                             , user         = config.get('local','user')
+                             , passwd       = config.get('local','pass')
+                             , db           = config.get('local','db')
+                             , charset      = 'utf8'
+                             , use_unicode  = True)
+
+        cursor = db.cursor(cursorclass=MySQLdb.cursors.DictCursor)
+
+        cursor.execute (query)
+
+        cursor.close()
+        db.commit()
+
+        return json.dumps ({"Error": 0, "Status": "OK"})
+    except Exception, e:
+        print ('Error: %s' % e)
+        abort(500)
+
+
+@app.route('/api/list')
+def list_of_logs ():
     try:
 	# getting args
 	start_date = request.args.get('start_date', None)
@@ -44,7 +94,7 @@ def list_of_logs (rows_count):
             string_filters += " and ".join(filters)
 	
 
-	query = "select id, status, date, component, text from logs" + string_filters + "order by id limit %s" % rows_count
+	query = "select id, status, date, component, text, car_id from logs" + string_filters
 
 	print ("query: %s" % query)
 
