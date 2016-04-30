@@ -1691,6 +1691,8 @@ f.i	static/ng-table/dist/ng-table.min.js	/^!function(a,b){"use strict";return"fu
 $scope.refreshRunways	static/app.js	/^  {$/;"	f
 demoController.reloadTableRunways	static/app.js	/^    var reloadTableRunways = function (data)$/;"	f
 $scope.deleteRunway	static/app.js	/^    }$/;"	f
+$scope.truncateRunways	static/app.js	/^    }$/;"	f
+$scope.truncateParkings	static/app.js	/^    }$/;"	f
 $scope.holdRunway	static/app.js	/^    }$/;"	f
 $scope.realizeRunway	static/app.js	/^    }$/;"	f
 $scope.refreshParkings	static/app.js	/^    }$/;"	f

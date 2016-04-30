@@ -17,6 +17,25 @@ var listRunways =  (req, res) =>
   });
 }
 
+var truncateRunways = (req, res) =>
+{
+  connection.connection.query("update runways set plane_id = NULL", function(err, rows, fields)
+  {
+    if (!err)
+    {
+      logger.logInformation("truncate table runways successfuly");
+      console.log("truncate table runways successfuly");
+      res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
+    }
+    else
+    {
+      console.log("Cant truncate table runways");
+      logger.logError("Cant truncate table runways");
+      res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
+    }
+  });
+}
+
 var holdRunway = (req, res) =>
 {
   if (!req.params.runway_id || !req.params.plane_id)
@@ -190,11 +209,12 @@ var getPlanesRunway = (req, res) =>
 
 module.exports =
 {
-  'listRunways'    : listRunways,
-  'holdRunway'     : holdRunway,
-  'realizeRunway'  : realizeRunway,
-  'deleteRunway'   : deleteRunway,
-  'holdFreeRunway' : holdFreeRunway,
-  'getPlanesRunway': getPlanesRunway,
-  'realizeRunwayMap': realizeRunwayMap
+  'listRunways'     : listRunways,
+  'holdRunway'      : holdRunway,
+  'realizeRunway'   : realizeRunway,
+  'deleteRunway'    : deleteRunway,
+  'holdFreeRunway'  : holdFreeRunway,
+  'getPlanesRunway' : getPlanesRunway,
+  'realizeRunwayMap': realizeRunwayMap,
+  'truncateRunways' : truncateRunways
 };

@@ -64,6 +64,60 @@ var app = angular.module('myApp', ['ngTable']);
         });
     }
 
+    $scope.truncateRunways = function ()
+    {
+      swal(
+      {
+          title: "Truncate runway?",
+          text: "Do you want to continue?",
+          type: "info",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+        },
+        function()
+        {
+
+          $http.get("/api/truncateRunways")
+            .success(function(data, status, headers, config)
+            {
+                    swal("Truncated!");
+            })
+            .error(function(data, status, headers, config)
+            {
+              console.log ("errorrr:", data);
+            });
+
+        });
+    }
+
+    $scope.truncateParkings = function ()
+    {
+      swal(
+      {
+          title: "Truncate parkings?",
+          text: "Do you want to continue?",
+          type: "info",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+        },
+        function()
+        {
+
+          $http.get("/api/truncateParkings")
+            .success(function(data, status, headers, config)
+            {
+                    swal("Truncated!");
+            })
+            .error(function(data, status, headers, config)
+            {
+              console.log ("errorrr:", data);
+            });
+
+        });
+    }
+
     $scope.holdRunway = function(runwayID)
     {
       swal({

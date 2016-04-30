@@ -6,6 +6,7 @@ var bodyParser   = require('body-parser')
 var carTower     = require('./carTower');
 var mapConnector = require('./mapConnector');
 var HTTPRequest  = require('./HTTPRequest');
+var logger       = require('./logger');
 
 
 var app = express();
@@ -25,6 +26,7 @@ app.get('/api/getPlanesRunway/:plane_id', runways.getPlanesRunway);
 app.get('/api/getRunways', mapConnector.getRunways);
 app.get('/api/realizeRunway/:runway_id', runways.realizeRunway);
 app.get('/api/realizeRunway/Map/:map_id', runways.realizeRunwayMap);
+app.get('/api/truncateRunways', runways.truncateRunways);
 
 // Parkings
 app.get('/api/listParkings', parking.listParkings);
@@ -34,17 +36,18 @@ app.get('/api/holdFreeParking/:plane_id', parking.holdFreeParking);
 app.get('/api/getParkings', mapConnector.getParkings);
 app.get('/api/realizeParking/:parking_id', parking.realizeParking);
 app.get('/api/realizeParking/Map/:map_id', parking.realizeParkingMap);
+app.get('/api/truncateParkings', parking.truncateParkings);
 
 app.get('/api/getId/:url', (req, res) =>
 {
   var url = new Buffer(req.params.url, 'base64').toString('ascii');
 
   //TODO: move to config file
-  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.26:3557/CarTowerService/GetId`, function(response)
+  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.10:3557/CarTowerService/GetId`, function(response)
   {
     if (response)
     {
-      console.log("response", response);
+      console.log("getId response", response);
       res.end(JSON.stringify(response));
     }
     else
@@ -75,9 +78,9 @@ app.get('/api/HoldRoute/:id/:from/:to', (req, res) =>
   }
 
   //TODO: move to config file
-  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.26:3557/CarTowerService/HoldRoute`, function(response)
+  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.10:3557/CarTowerService/HoldRoute`, function(response)
   {
-    console.log("response", response);
+    console.log("HoldRoute response", response);
 
     res.end(JSON.stringify(response));
   }, q);
@@ -103,20 +106,23 @@ app.get('/api/ReleaseRoute/:id/:from/:to', (req, res) =>
   }
 
   //TODO: move to config file
-  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.26:3557/CarTowerService/ReleaseRoute`, function(response)
+  HTTPRequest.makeHTTPPostRequest(`http://10.128.0.10:3557/CarTowerService/ReleaseRoute`, function(response)
   {
-    console.log("response", response);
+    console.log("ReleaseRoute response", response);
 
     res.end(JSON.stringify(response));
   }, q);
 });
 
 
-
-var server = app.listen(3228, function ()
+logger.initLogger (() =>
 {
-  var host = server.address().address
-  var port = server.address().port
+  var server = app.listen(3228, function ()
+  {
+    var host = server.address().address
+    var port = server.address().port
 
-  console.log("Example app listening at http://%s:%s", host, port);
+    console.log("Example app listening at http://%s:%s", host, port);
+    logger.logInformation("Control tower has been started!");
+  });
 });

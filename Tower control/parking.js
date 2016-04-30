@@ -29,6 +29,8 @@ var holdParking = (req, res) =>
   {
     if (!err)
     {
+      console.log(`Plane ${req.params.plane_id} has held parking ${req.params.parking_id}`);
+      logger.logInformation(`Plane ${req.params.plane_id} has held parking ${req.params.parking_id}`);
       res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
     }
     else
@@ -142,13 +144,33 @@ var holdFreeParking =  (req, res) =>
   });
 }
 
+var truncateParkings = (req, res) =>
+{
+  connection.connection.query("update parkings set plane_id = NULL", function(err, rows, fields)
+  {
+    if (!err)
+    {
+      logger.logInformation("truncate table parkings successfuly");
+      console.log("truncate table parkings successfuly");
+      res.end(JSON.stringify({'Error': 0, 'Status': "OK"}));
+    }
+    else
+    {
+      console.log("Cant truncate table parkings");
+      logger.logError("Cant truncate table parkings");
+      res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
+    }
+  });
+}
+
 
 module.exports =
 {
-  'listParkings'    : listParkings,
-  'holdParking'     : holdParking,
-  'realizeParking'  : realizeParking,
-  'deleteParking'   : deleteParking,
-  'holdFreeParking' : holdFreeParking,
-  'realizeParkingMap': realizeParkingMap
+  'listParkings'     : listParkings,
+  'holdParking'      : holdParking,
+  'realizeParking'   : realizeParking,
+  'deleteParking'    : deleteParking,
+  'holdFreeParking'  : holdFreeParking,
+  'realizeParkingMap': realizeParkingMap,
+  'truncateParkings' : truncateParkings
 };
