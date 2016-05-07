@@ -18,8 +18,8 @@
   },
   "CarTowerService":
   {
-    "ip": "192.168.0.1",
-    "port": 1488
+    "ip": "10.128.0.26",
+    "port": 3557
   },
   "mapConnector":
   {

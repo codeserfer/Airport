@@ -137,7 +137,7 @@ var deleteRunway = (req, res) =>
   });
 }
 
-var holdFreeRunway = (req, res) =>
+var requestLanding = (req, res) =>
 {
   if (!req.params.plane_id)
   {
@@ -145,7 +145,40 @@ var holdFreeRunway = (req, res) =>
     return;
   }
 
-  connection.connection.query(`call hold_free_runway(${req.params.plane_id})`, function(err, rows, fields)
+  connection.connection.query(`call request_landing(${req.params.plane_id})`, function(err, rows, fields)
+  {
+    if (!err)
+    {
+      var result = rows[0][0];
+      if (result['error'] == 0)
+      {
+          logger.logInformation(`Hold free runway for planeID ${req.params.plane_id}: ${result['placeId']}`);
+      }
+      else
+      {
+        logger.logInformation(`Hold free runway for planeID ${req.params.plane_id}: no free runway`);
+      }
+
+
+      res.end(JSON.stringify(result));
+    }
+    else
+    {
+      console.log('listParkings: Error in query');
+      res.end(JSON.stringify({'Error': 1, 'Status': "FUCK"}));
+    }
+  });
+}
+
+var requestTakeoff = (req, res) =>
+{
+  if (!req.params.plane_id)
+  {
+    res.end(JSON.stringify({'Error': 1, 'Status': "No plane id"}));
+    return;
+  }
+
+  connection.connection.query(`call request_takeoff(${req.params.plane_id})`, function(err, rows, fields)
   {
     if (!err)
     {
@@ -213,7 +246,8 @@ module.exports =
   'holdRunway'      : holdRunway,
   'realizeRunway'   : realizeRunway,
   'deleteRunway'    : deleteRunway,
-  'holdFreeRunway'  : holdFreeRunway,
+  'requestLanding'  : requestLanding,
+  'requestTakeoff'  : requestTakeoff,
   'getPlanesRunway' : getPlanesRunway,
   'realizeRunwayMap': realizeRunwayMap,
   'truncateRunways' : truncateRunways

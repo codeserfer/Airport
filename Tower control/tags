@@ -16,14 +16,15 @@ queue	config.json	/^    "queue": "logger_queue"$/;"	f
 logger	config.json	/^  "logger":$/;"	f
 component	config.json	/^    "component": "tower_control"$/;"	f
 CarTowerService	config.json	/^  "CarTowerService":$/;"	f
-ip	config.json	/^    "ip": "192.168.0.1",$/;"	f
-port	config.json	/^    "port": 1488$/;"	f
+ip	config.json	/^    "ip": "10.128.0.26",$/;"	f
+port	config.json	/^    "port": 3557$/;"	f
 mapConnector	config.json	/^  "mapConnector":$/;"	f
 ip	config.json	/^    "ip": "10.128.0.30",$/;"	f
 port	config.json	/^    "port": 3228$/;"	f
 HTTPRequest	config.json	/^  "HTTPRequest":$/;"	f
 timeout	config.json	/^    "timeout": 5000$/;"	f
-hold_free_runway	stored procedures.sql	/^create procedure hold_free_runway(IN car_id int(11))$/;"	p
+request_langing	stored procedures.sql	/^create procedure request_langing(IN car_id int(11))$/;"	p
+request_takeoff	stored procedures.sql	/^create procedure request_takeoff(IN car_id int(11))$/;"	p
 hold_free_parking	stored procedures.sql	/^create procedure hold_free_parking(IN car_id int(11))$/;"	p
 name	static/ng-table/bower.json	/^  "name": "ng-table",$/;"	f
 version	static/ng-table/bower.json	/^  "version": "1.0.0-beta.9",$/;"	f
