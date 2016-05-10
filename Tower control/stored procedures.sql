@@ -1,6 +1,6 @@
 delimiter //
-drop  procedure if exists request_langing;
-create procedure request_langing(IN car_id int(11))
+drop  procedure if exists request_landing;
+create procedure request_landing(IN car_id int(11))
 BEGIN
 	declare free_id int(11) default null;
 	declare free_id_parkings int(11) default null;

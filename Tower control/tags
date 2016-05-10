@@ -23,7 +23,7 @@ ip	config.json	/^    "ip": "10.128.0.30",$/;"	f
 port	config.json	/^    "port": 3228$/;"	f
 HTTPRequest	config.json	/^  "HTTPRequest":$/;"	f
 timeout	config.json	/^    "timeout": 5000$/;"	f
-request_langing	stored procedures.sql	/^create procedure request_langing(IN car_id int(11))$/;"	p
+request_landing	stored procedures.sql	/^create procedure request_landing(IN car_id int(11))$/;"	p
 request_takeoff	stored procedures.sql	/^create procedure request_takeoff(IN car_id int(11))$/;"	p
 hold_free_parking	stored procedures.sql	/^create procedure hold_free_parking(IN car_id int(11))$/;"	p
 name	static/ng-table/bower.json	/^  "name": "ng-table",$/;"	f
